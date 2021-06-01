@@ -3,6 +3,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Server;
+use App\Form\Type\ServerType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +29,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @Route ("/services", name="page_sevices")
+     * @Route ("/services", name="page_services")
      */
     public function services(): Response
     {
@@ -39,13 +41,18 @@ class PageController extends AbstractController
      */
     public function contact(): Response
     {
-        return $this->render('page/contact.html.twig');
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            return $this->redirectToRoute('page_contact');
+        }
     }
 
     /**
      * @Route ("/sign-in", name="page_sign-in")
      */
-    public function signin(): Response
+    public function signIn(): Response
     {
         return $this->render('page/sign-in.html.twig');
     }
@@ -56,62 +63,6 @@ class PageController extends AbstractController
     public function signup(): Response
     {
         return $this->render('page/sign-up.html.twig');
-    }
-
-    /**
-     * @Route ("/account", name="page_account")
-     */
-    public function account(): Response
-    {
-        return $this->render('account/account_dashboard.html.twig');
-    }
-
-    /**
-     * @Route ("/account/profil", name="page_profile")
-     */
-    public function profile(): Response
-    {
-        return $this->render('account/account_profile.html.twig');
-    }
-
-    /**
-     * @Route ("/account/new-server", name="page_new-server")
-     */
-    public function newServer(): Response
-    {
-        return $this->render('account/account_new-server.html.twig');
-    }
-
-    /**
-     * @Route ("/account/{server.id}", name="page_server")
-     */
-    public function server(): Response
-    {
-        return $this->render('account/account_server-detail.html.twig');
-    }
-
-    /**
-     * @Route ("/account/{server.id}/reboot", name="page_server_reboot")
-     */
-    public function serverReboot(): Response
-    {
-        return $this->;
-    }
-
-    /**
-     * @Route ("/account/{server.id}/delete", name="page_server_delete")
-     */
-    public function serverDelete(): Response
-    {
-        return $this->;
-    }
-
-    /**
-     * @Route ("/account/api/{server.id}/ready", name="page_server_ready")
-     */
-    public function serverReboot(): Response
-    {
-        return $this->;
     }
 
 }

@@ -9,7 +9,7 @@ use Symfony\Component\String\UnicodeString;
 
 class NameGenerator
 {
-    public function generate(Server $server): void
+    /*public function generate(Server $server): void
     {
         $location->server->getlocation();
         $datacode->datacenter->getcode();
@@ -24,5 +24,5 @@ class NameGenerator
         $slug = (string) $string->snake()->replace('_', '-');
 
         $server->setSlug($slug);
-    }
+    }*/
 }
