@@ -4,25 +4,19 @@
 namespace App\Service;
 
 use App\Entity\Server;
-use App\Entity\DataCenter;
-use Symfony\Component\String\UnicodeString;
 
 class NameGenerator
 {
-    /*public function generate(Server $server): void
+    public function generate(Server $server): void
     {
-        $location->server->getlocation();
-        $datacode->datacenter->getcode();
+        $location = $server->getlocation()->getcode();
 
-        $distribution->server->getdistribution();
-        $distribcode->distribution->getcode();
+        $distribution = $server->getdistribution()->getcode();
 
-        $string = 'SC-'$datacode-$distribcode-$server->getid();
+        $random = rand(1, 500);
 
-        $string = new UnicodeString($string);			//permet d'enlever les accents
+        $name = 'SC-'.$location. '-'. $distribution. '-' . $random;
 
-        $slug = (string) $string->snake()->replace('_', '-');
-
-        $server->setSlug($slug);
-    }*/
+        $server->setName($name);
+    }
 }

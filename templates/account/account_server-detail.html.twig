@@ -11,7 +11,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h2>Server detail</h2>
                 <ol>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="{{ path('page_index') }}">Home</a></li>
                     <li>Server detail</li>
                 </ol>
             </div>
@@ -27,10 +27,10 @@
 
                 <div class="col-md-4 col-lg-3">
                     <div class="list-group pe-5">
-                        <a href="account_dashboard.html" class="list-group-item list-group-item-action">
+                        <a href="{{ path('account_dashboard') }}" class="list-group-item list-group-item-action">
                             Dashboard
                         </a>
-                        <a href="account_profil.html" class="list-group-item list-group-item-action">
+                        <a href="{{ path('account_profile') }}" class="list-group-item list-group-item-action">
                             My profil
                         </a>
                         <a href="#" class="list-group-item list-group-item-action">
@@ -44,7 +44,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h1 class="h4 my-2">SC-NY-Ubuntu-01</h1>
+                            <h1 class="h4 my-2"> {{ server.name }}</h1>
                         </div>
                         <div class="card-body row">
                             <div class="col">
@@ -53,29 +53,29 @@
                             </div>
                             <div class="col">
                                 <strong>Status</strong>
-                                <span class="badge bg-success">Ready</span>
+                                <span class="badge bg-success"> {{ server.state }}</span>
                             </div>
                         </div>
                         <div class="card-body border-top">
                             <dl class="row mb-0">
                                 <dt class="col-sm-5">Datacenter</dt>
-                                <dd class="col-sm-7">New York</dd>
+                                <dd class="col-sm-7"> {{ server.location }}</dd>
 
                                 <dt class="col-sm-5">Distribution</dt>
-                                <dd class="col-sm-7">Ubuntu 20.04 (LTS) x64</dd>
+                                <dd class="col-sm-7">{{ server.distribution }}</dd>
 
                                 <dt class="col-sm-5">CPU</dt>
-                                <dd class="col-sm-7">2 Intel CPUs</dd>
+                                <dd class="col-sm-7">{{ server.cpu }} Intel CPUs</dd>
 
                                 <dt class="col-sm-5">RAM</dt>
-                                <dd class="col-sm-7">4 GB</dd>
+                                <dd class="col-sm-7">{{ server.ram }} GB</dd>
                             </dl>
                         </div>
                         <div class="card-body border-top">
-                            <a class="btn btn-primary me-3" href="#">
+                            <a class="btn btn-primary me-3" href="{{path('server_reboot', {'id':server.id})}}">
                                 Restart
                             </a>
-                            <a class="btn btn-light" href="#">
+                            <a class="btn btn-light" href="{{path('server_reset', {'id':server.id})}}">
                                 Reset
                             </a>
                         </div>

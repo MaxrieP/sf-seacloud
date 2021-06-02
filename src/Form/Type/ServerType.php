@@ -8,6 +8,7 @@ use App\Entity\Distribution;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,6 +20,15 @@ class ServerType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Name',
                 'help'  => 'Leave blank for auto generation.',
+                'required'=>false,
+            ])
+            ->add('location', EntityType::class, [
+                'label' => 'Data Center',
+                'class'=> DataCenter::class
+            ])
+            ->add('distribution', EntityType::class, [
+                'label' => 'Distribution',
+                'class'=> Distribution::class
             ])
             ->add('cpu', RangeType::class, [
                 'label' => 'CPU',
@@ -33,15 +43,9 @@ class ServerType extends AbstractType
                     'min' => 1,
                     'max' => 16,
                 ],
-            ])
-            ->add('ram', RangeType::class, [
-            'label' => 'RAM',
-            'attr'  => [
-                'min' => 1,
-                'max' => 16,
-            ]
             ]);
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefault('data_class', Server::class);

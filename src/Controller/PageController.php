@@ -4,10 +4,18 @@
 namespace App\Controller;
 
 use App\Entity\Server;
+use App\Entity\User;
+use App\Form\RegistrationFormType;
 use App\Form\Type\ServerType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PageController extends AbstractController
 {
@@ -39,14 +47,24 @@ class PageController extends AbstractController
     /**
      * @Route ("/contact", name="page_contact")
      */
-    public function contact(): Response
+    public function contact(Request $request): Response
     {
+        $form = $this
+            ->createFormBuilder()
+            ->add('name', TextType::class)
+            ->add('email', EmailType::class)
+            ->add('subject', TextType::class)
+            ->add('message', TextareaType::class)
+            ->add('submit', SubmitType::class)
+            ->getForm();
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
             return $this->redirectToRoute('page_contact');
         }
+        return $this->render('page/contact.html.twig', ['form'=> $form->createView()]);
     }
 
     /**
@@ -60,9 +78,24 @@ class PageController extends AbstractController
     /**
      * @Route ("/sign-up", name="page_sign-up")
      */
-    public function signup(): Response
+    public function Up(Request $request): Response
     {
-        return $this->render('page/sign-up.html.twig');
+        $user = new User();
+
+        $form = $this->createForm(RegistrationFormType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('account_dashboard');
+        }
+
+        return $this->render('page/sign-up.html.twig', ['form' => $form->createView()]);
     }
 
 }
