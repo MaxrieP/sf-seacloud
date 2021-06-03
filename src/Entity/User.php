@@ -42,7 +42,7 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default":0})
      */
     private $isVerified = false;
 

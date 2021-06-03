@@ -53,7 +53,13 @@
                             </div>
                             <div class="col">
                                 <strong>Status</strong>
-                                <span class="badge bg-success"> {{ server.state }}</span>
+                                {% if server.state == 1 %}
+                                    <span class="badge bg-warning">Pending</span>
+                                {% elseif server.state == 2 %}
+                                    <span class="badge bg-success">Ready</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Stopped</span>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="card-body border-top">

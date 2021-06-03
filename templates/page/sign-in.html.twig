@@ -33,7 +33,17 @@
                         Sign in to your account and start working with your servers.
                     </p>
 
-                    <form>
+                    <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <div class="mb-3">
+                                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                            </div>
+                        {% endif %}
+
                         <div class="mb-3">
                             <label for="login-email" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="login-email" placeholder="name@example.com">

@@ -70,9 +70,9 @@ class PageController extends AbstractController
     /**
      * @Route ("/sign-in", name="page_sign-in")
      */
-    public function signIn(): Response
+    public function In(): Response
     {
-        return $this->render('page/sign-in.html.twig');
+        return $this->redirectToRoute('account_dashboard');
     }
 
     /**
@@ -95,7 +95,7 @@ class PageController extends AbstractController
             return $this->redirectToRoute('account_dashboard');
         }
 
-        return $this->render('page/sign-up.html.twig', ['form' => $form->createView()]);
+        //return $this->render('page/sign-up.html.twig', ['form' => $form->createView()]);
     }
 
 }

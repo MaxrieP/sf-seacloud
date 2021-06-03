@@ -33,7 +33,7 @@
                             <a href="{{ path('account_profile') }}" class="list-group-item list-group-item-action">
                                 My profil
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action">
+                            <a href="{{path('app_logout')}}" class="list-group-item list-group-item-action">
                                 Logout
                             </a>
                         </div>
@@ -47,9 +47,11 @@
                         <h2 class="mb-3">Servers</h2>
 
                         {% for server in server_list %}
+
                         <div class="card mb-3">
                             <div class="row g-0">
                                 <div class="col-md-3">
+                                    <a href="{{ path('server_detail', ['id']=>server.id) }}">
                                     <div class="card-body">
                                         <h4 class="mb-3">{{ server.name }}</h4>
                                         <p>
@@ -58,9 +60,16 @@
                                         </p>
                                         <p>
                                             <strong>Status</strong>
-                                            <span class="badge bg-success">{{ server.state }}</span>
+                                            {% if server.state == 1 %}
+                                                <span class="badge bg-warning">Pending</span>
+                                            {% elseif server.state == 2 %}
+                                                <span class="badge bg-success">Ready</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Stopped</span>
+                                            {% endif %}
                                         </p>
                                     </div>
+                                    </a>
                                 </div>
                                 <div class="col-md-6 border-start">
                                     <div class="card-body">

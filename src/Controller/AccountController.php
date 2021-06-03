@@ -111,11 +111,11 @@ class AccountController extends AbstractController
         $form = $this->createForm(ServerType::class, $server);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($server);
-            $em->flush();
-        }
+        $request->request->get('confirm');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($server);
+        $em->flush();
 
         return $this->redirectToRoute('account_dashboard');
     }
@@ -137,7 +137,7 @@ class AccountController extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'Votre serveur redémarre');
-        return $this->redirectToRoute('account_server', $id);
+        return $this->redirectToRoute('account_server',['id' => $id]);
     }
 
     /**
@@ -157,14 +157,14 @@ class AccountController extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'Votre serveur est réinstallé');
-        return $this->redirectToRoute('account_server', $id);
+        return $this->redirectToRoute('account_server', ['id'=> $id]);
     }
 
 
     /**
      * @Route ("/account/api/{id}/ready", name="page_server-ready")
      */
-    public function Ready(): Response
+    public function Ready(int $id): Response
     {
         /**
          * @var Server $server
@@ -178,7 +178,7 @@ class AccountController extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'Votre serveur est prêt');
-        return $this->redirectToRoute('account_server');
+        return $this->redirectToRoute('account_server', ['id'=> $id]);
 
         //TODO : envoyer mail au client
     }
