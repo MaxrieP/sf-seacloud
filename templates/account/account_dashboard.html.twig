@@ -51,9 +51,10 @@
                         <div class="card mb-3">
                             <div class="row g-0">
                                 <div class="col-md-3">
-                                    <a href="{{ path('server_detail', ['id']=>server.id) }}">
                                     <div class="card-body">
-                                        <h4 class="mb-3">{{ server.name }}</h4>
+                                        <a href="{{ path('account_server', {'id': server.id}) }}">
+                                            <h4 class="mb-3">{{ server.name }}</h4>
+                                        </a>
                                         <p>
                                             <strong>IP</strong>
                                             <span class="text-muted">255.255.255.255</span>
@@ -69,7 +70,6 @@
                                             {% endif %}
                                         </p>
                                     </div>
-                                    </a>
                                 </div>
                                 <div class="col-md-6 border-start">
                                     <div class="card-body">
@@ -97,6 +97,7 @@
                                         <a class="btn btn-light" href="{{path('server_reset', {'id':server.id})}}">
                                             Reset
                                         </a>
+                                        <br>
                                     </div>
                                 </div>
                             </div>

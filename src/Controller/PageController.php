@@ -87,15 +87,17 @@ class PageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('password')->getData();
+
+            //TODO UserPasswordEncoderInterface (method encode)
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('account_dashboard');
+            return $this->RedirectToRoute('page_sign-in');
         }
-
-        //return $this->render('page/sign-up.html.twig', ['form' => $form->createView()]);
+        return $this->render('page/sign-up.html.twig', ['form' => $form->createView()]);
     }
 
 }

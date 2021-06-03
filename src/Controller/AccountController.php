@@ -74,11 +74,11 @@ class AccountController extends AbstractController
             $em->persist($server);
             $em->flush();
 
-            $url = $this->generateUrl('page_server', ['id'=> $server->getId()] );
+            $url = $this->generateUrl('account_server', ['id'=> $server->getId()] );
             return new RedirectResponse($url);
         }
 
-        return $this->render('account_new-server.html.twig', ['form' => $form->createView()]);
+        return $this->render('account/account_new-server.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -96,7 +96,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route ("/account/{id}/delete", name="page_server_delete")
+     * @Route ("/account/{id}/delete", name="server_delete")
      */
     public function serverDelete(Request $request, int $id): Response
     {
@@ -104,14 +104,9 @@ class AccountController extends AbstractController
 
         $server = $repository->find($id);
 
-        if (null === $server) {
-            throw $this->createNotFoundException('Serveur introuvable');
+        if (1 !== $request->request->getInt('confirm')) {
+            return $this->redirectToRoute('account_server', ['id'=> $id]);
         }
-
-        $form = $this->createForm(ServerType::class, $server);
-        $form->handleRequest($request);
-
-        $request->request->get('confirm');
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($server);
